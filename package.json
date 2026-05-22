@@ -20,6 +20,7 @@
   "homepage": "https://github.com/FDEUX97K/bot-discord#readme",
   "dependencies": {
     "discord.js": "^14.26.4",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
   }
 }
