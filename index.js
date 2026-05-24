@@ -1,5 +1,13 @@
+```js
 const express = require("express");
 const app = express();
+const fs = require('fs');
+
+const moneyFile = 'money.json';
+
+if (!fs.existsSync(moneyFile)) {
+fs.writeFileSync(moneyFile, JSON.stringify({ total: 0 }));
+}
 
 app.get("/", (req, res) => {
   res.send("Bot online !");
@@ -50,7 +58,11 @@ option.setName('montant')
 .addStringOption(option =>
 option.setName('heure')
 .setDescription('Heure')
-.setRequired(true))
+.setRequired(true)),
+
+new SlashCommandBuilder()
+.setName('total')
+.setDescription('Voir l’argent total')
 
 ].map(command => command.toJSON());
 
@@ -73,7 +85,7 @@ firstGuild.id
 { body: commands }
 );
 
-console.log('✅ Commande /action installée');
+console.log('✅ Commandes installées');
 
 } catch (error) {
 console.log(error);
@@ -92,6 +104,12 @@ try {
 const type = interaction.options.getString('type');
 const montant = interaction.options.getInteger('montant');
 const heure = interaction.options.getString('heure');
+
+const data = JSON.parse(fs.readFileSync(moneyFile));
+
+data.total += montant;
+
+fs.writeFileSync(moneyFile, JSON.stringify(data, null, 2));
 
 const embed = new EmbedBuilder()
 .setTitle('📌 Nouvelle Action RP')
@@ -116,6 +134,11 @@ inline: true
 name: '🕒 Heure',
 value: heure,
 inline: true
+},
+{
+name: '🏦 Total Serveur',
+value: `${data.total}$`,
+inline: false
 }
 )
 .setTimestamp();
@@ -138,6 +161,43 @@ ephemeral: true
 
 }
 
+if (interaction.commandName === 'total') {
+
+const data = JSON.parse(fs.readFileSync(moneyFile));
+
+await interaction.reply({
+content: `💰 Caisse totale du serveur : ${data.total}$`
+});
+
+}
+
 });
 
 client.login(process.env.TOKEN);
+```
+
+Ensuite dans PowerShell :
+
+```bash
+cd Desktop\bot-discord
+```
+
+Puis :
+
+```bash
+git add .
+```
+
+Puis :
+
+```bash
+git commit -m "add total system"
+```
+
+Puis :
+
+```bash
+git push
+```
+
+🚀
