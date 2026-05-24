@@ -68,8 +68,7 @@ new SlashCommandBuilder()
 
 client.once('clientReady', async () => {
 
-console.log(`✅ Connecté : ${client.user.tag}`);
-
+console.log("Connecté : " + client.user.tag);
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 try {
