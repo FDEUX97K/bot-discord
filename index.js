@@ -115,10 +115,11 @@ const embed = new EmbedBuilder()
 .setColor('Red')
 .addFields(
 {
+{
 name: '👤 Membre',
 value: `${interaction.user}`,
 inline: true
-},
+},},
 {
 name: '🎯 Action',
 value: type,
@@ -175,28 +176,3 @@ content: `💰 Caisse totale du serveur : ${data.total}$`
 client.login(process.env.TOKEN);
 ```
 
-Ensuite dans PowerShell :
-
-```bash
-cd Desktop\bot-discord
-```
-
-Puis :
-
-```bash
-git add .
-```
-
-Puis :
-
-```bash
-git commit -m "add total system"
-```
-
-Puis :
-
-```bash
-git push
-```
-
-🚀
